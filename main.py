@@ -275,5 +275,3 @@ try:
 except:
   os.system('kill 1')
 # using uptimerobot.com to ping our flask webserver once every five minutes
-# thus never meeting the 1 hour deadline
-# https://stackoverflow.com/questions/50678419/how-to-make-multiple-files-python-bot
