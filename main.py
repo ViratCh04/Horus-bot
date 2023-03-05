@@ -21,30 +21,9 @@ feelings = ['sad', 'bad', 'dejected', 'depressed', 'horrible', 'upset']
 async def test(ctx, arg):
   await ctx.send(arg)
 
-encouragements = [
-  'You will be just fine!',
-  'Grow the fuck up',
-  'Cheer up!',
-  'Do not commit suicide please'
-]
 
 if 'responding' not in db.keys():
   db['responding'] = True
-
-
-def updateEncouragements(newQuote):
-  if 'encouragements' in db.keys():
-    encouragement = db['encouragements']
-    encouragement.append(newQuote)
-    db['encouragements'] = encouragement
-  else:
-    db['encouragements'] = [newQuote]
-
-def deleteEncouragement(index):
-  encouragement = db['encouragements']
-  if len(encouragement) > index and index > 0:
-    encouragement.pop(index)
-    db['encouragements'] = encouragement
 
 
 @client.event
@@ -66,24 +45,6 @@ async def on_message(message):
     if any(word in message.content for word in feelings):
       await message.channel.send(random.choice(quotes))
 
-  if message.content.startswith('qshow'):
-    quoteList = []
-    if 'encouragements' in db.keys():
-      quoteList = db['encouragements'].value
-      await message.channel.send(quoteList)
-  
-  if message.content.startswith('qnew'):
-    newQuote = message.content.split('qnew', 1)[1]
-    updateEncouragements(newQuote)
-    await message.channel.send("New encouragement added!")
-
-  if message.content.startswith('qdelete'):
-    encourageList = []
-    if 'encouragements' in db.keys():
-      index = int(message.content.split('qdelete', 1)[1])
-      deleteEncouragement(index)
-      encourageList = db['encouragements'].value
-    await message.channel.send(encourageList)
 
   if message.content.startswith('hresponding'):
     value = message.content.split('hresponding ', 1)[1]
